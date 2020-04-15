@@ -35,93 +35,50 @@
     <div id="app">
         <!-- Statusbar overlay -->
         <div class="statusbar"></div>
-
-        <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-            <!-- Initial Page, "data-name" contains page name -->
-            <div data-name="index" class="page">
-
-                <!-- Top Navbar -->
-                <div class="navbar">
-                    <div class="navbar-bg"></div>
-                    <div class="navbar-inner">
-                        <div class="left"><i class="icon icon-back"></i></div>
-                        <div class="title">Page Title</div>
-                        <div class="right"><i class="icon icon-forward"></i></div>
-                    </div>
-                </div>
-
-                <!-- Toolbar -->
-                <div class="toolbar toolbar-bottom">
-                    <div class="toolbar-inner">
-                        <!-- Toolbar links -->
-                        <a href="#" class="link">Link 1</a>
-                        <a href="#" class="link">Link 2</a>
-                    </div>
-                </div>
-
-                <!-- Scrollable page content -->
-                <div class="page-content text-align-center">
-
-                    <div class="block">
-                        <h3>Contenido del Index</h3>
-                        <!-- Link to another page -->
-                        <a href="/about/" class="button button-round button-fill">Página About</a>
-
-                        <!-- EL POPUP -->
-                        <p><a href="#" data-popup=".my-popup" class="popup-open">Abrir Popup</a></p>
-
-                        <!-- 
-                        EL POPUP:
-                        - Ver que la relacion se propude con la clase .my-popup
-                        - El o los elementos que lo abren tienen la clase .popup-open y abrirá el popup definido en data-popup
-                        - El o los elementos que lo cierren tienen la clase popup-close y se cerrará a sí mismo. 
-                       -->
-                        <div class="popup my-popup">
-                            <div class="view">
-                                <div class="page">
-                                    <div class="navbar">
-                                        <div class="navbar-bg"></div>
-                                        <div class="navbar-inner">
-                                            <div class="title">Popup</div>
-                                            <div class="right">
-                                                <!-- Link to close popup -->
-                                                <a class="link popup-close">Cerrar</a>
-                                            </div>
+            <div class="page">
+                <!-- page-content has additional login-screen content -->
+                <div class="page-content login-screen-content">
+                    <div class="login-screen-title">BARBERIAS</div>
+                    <!-- Login form -->
+                    <form>
+                        <div class="list">
+                            <ul>
+                                <li class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label">Usuario</div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="username" placeholder="Username">
+                                            <span class="input-clear-button"></span>
                                         </div>
                                     </div>
-                                    <div class="page-content">
-                                        Contenido del popup
+                                </li>
+                                <li class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label">Contraseña</div>
+                                        <div class="item-input-wrap">
+                                            <input type="password" name="password" placeholder="Password">
+                                            <span class="input-clear-button"></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
-
-                        <!-- EL POPUPOVER -->
-                        <!-- Similar al popup en programación. En lugar de popup va popover -->
-                        <p><a href="#" data-popover=".my-popover" class="popover-open">Abrir Popover</a></p>
-
-                        <!-- And somewhere in DOM -->
-                        <div class="popover my-popover">
-                            <div class="popover-inner block">
-                                <!-- Link to close popover -->
-                                <h4>Titulo</h4>
-                                <p>Texto 1</p>
-                                <p>Texto 2</p>
-                                <a class="link popover-close">Cerrar Popover</a>
-                            </div>
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <a href="/home/" class="item-link list-button">Ingresar</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/" class="item-link list-button">Ingresar como admin</a>
+                                </li>
+                                <li>
+                                    <a href="/register/" class="item-link list-button">Registrarme</a>
+                                </li>
+                            </ul>
+                            <div class="block-footer">¿Todavia no estas registrado?</div>
                         </div>
-
-                        <!-- GRUPO DE BOTONES CON EVENTOS  -->
-                        <div class="block">
-                            <div class="row">
-                                <button id="btn_g1_1" class="col button button-outline tocaBoton">Botón 1</button>
-                                <button id="btn_g1_2" class="col button button-outline tocaBoton">Botón 2</button>
-                                <button id="btn_g1_3" class="col button button-outline tocaBoton">Botón 3</button>
-                            </div>
-                            <h3 id="msgBtn">Tocá un botón y te digo algo</h3>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
