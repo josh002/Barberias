@@ -1,15 +1,15 @@
-# Framework 7 Template - Version 5.4.2
+# Framework 7 Template - Version 5.5.0
 
 ## Framework7 
 
 Framework7 app created with following options:
 
 ```
-phonegap create MYAPP --template f7-v542
+phonegap create MYAPP --template f7-v550
 
 OR
 
-cordova create MYAPP --template f7-v542 
+cordova create MYAPP --template f7-v550 
 ```
 
 

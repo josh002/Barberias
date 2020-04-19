@@ -1,4 +1,6 @@
-/* Your app custom styles here */
-#register-content{
-    margin-top: 5vh;
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
 }
+
+/* Your app custom styles here */
