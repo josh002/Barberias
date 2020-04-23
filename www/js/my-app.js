@@ -33,7 +33,7 @@ var mainView = app.views.create('.view-main');
 $$(document).on('deviceready', function () {
     console.log("Device is ready!");
     var db = firebase.firestore();
-    $$('#login').on('click', login);
+   
 });
 
 
@@ -41,13 +41,14 @@ $$(document).on('deviceready', function () {
 $$(document).on('page:init', function (e) {
     // Do something here when page loaded and initialized
     console.log(e);
+    $$('#login').on('click', login);
 })
 
 // Option 2. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="about"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
-    alert('Hello');
+
 })
 $$(document).on('page:init', '.page[data-name="form"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
@@ -57,9 +58,11 @@ $$(document).on('page:init', '.page[data-name="form"]', function (e) {
 //FUNCTIONS
 //register
 function register() {
+   
     var hasError = false;
     var email = $$('#email').val();
     var password = $$('#password').val();
+    console.log(hasError, email, password);
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
 
         var errorCode = error.code;
@@ -74,20 +77,22 @@ function register() {
 }
 //login
 function login() {
-    var hasError = false;
-    var email = $$('#email-sign').val();
-    var password = $$('#password-sign').val();
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    // alert('ir a about');
+    var logHasError = false;
+    var logEmail = $$('#email-sign').val();
+    var logPassword = $$('#password-sign').val();
+    console.log(logHasError, logEmail, logPassword);
+    firebase.auth().signInWithEmailAndPassword(logEmail, logPassword)
         .catch(function (error) {
             //Si hubo algun error, ponemos un valor referenciable en la variable huboError
-            hasError= true;
+            logHasError= true;
             var errorCode = error.code;
             var errorMessage = error.message;
            alert(error);
         })
         .then(function () {
             //En caso de que esté correcto el inicio de sesión y no haya errores, se dirige a la siguiente página
-            if (!hasError) {
+            if (!logHasError) {
                 mainView.router.navigate('/about/');
             }
         });
