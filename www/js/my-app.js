@@ -50,6 +50,11 @@ $$(document).on('page:init', '.page[data-name="about"]', function (e) {
     console.log(e);
 
 })
+$$(document).on('page:init', '.page[data-name="main"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    console.log(e);
+    console.log('estas en pagina main');
+})
 $$(document).on('page:init', '.page[data-name="form"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
@@ -93,7 +98,7 @@ function login() {
         .then(function () {
             //En caso de que esté correcto el inicio de sesión y no haya errores, se dirige a la siguiente página
             if (!logHasError) {
-                mainView.router.navigate('/about/');
+                mainView.router.navigate('/tabs/');
             }
         });
 
