@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="css/icons.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body class="color-theme-gray">
   <div id="app">
       
     <!-- Your main view, should have "view-main" class -->
@@ -32,11 +32,13 @@
         
         <!-- Scrollable page content-->
         <div class="page-content">
+            <div id="main-logo">
+            </div>
             <div class="list no-hairlines-md">
                 <ul>
                   <li>
-                    <div class="item-content item-input">
-                      <div class="item-inner">
+                    <div class="item-content item-input ">
+                      <div class="item-inner login-input">
                         <div class="item-title item-label">E-mail</div>
                         <div class="item-input-wrap">
                           <input id="email-sign" type="email" placeholder="E-mail"/>
@@ -45,8 +47,8 @@
                     </div>
                   </li>
                   <li>
-                    <div class="item-content item-input">
-                      <div class="item-inner">
+                    <div class="item-content item-input " >
+                      <div class="item-inner login-input">
                         <div class="item-title item-label">Password</div>
                         <div class="item-input-wrap">
                           <input id="password-sign" type="password" placeholder="Password"/>
@@ -56,10 +58,10 @@
                   </li> 
                  
                 </ul>
-                <button id="login" class="col button button-small button-round button-outline">Ingresar</button>
+                <button id="login" class="col button button-small button-round button-outline login-buttons">Ingresar</button>
               </div>
 
-          <a href="/register/" data-view=".page-content" class="col button button-small button-round button-outline">Registrarme</a>       
+          <a href="/register/" data-view=".page-content" class="col button button-small button-round button-outline login-buttons">Registrarme</a>       
   
         </div>
       </div>

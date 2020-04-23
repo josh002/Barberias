@@ -18,15 +18,12 @@ var app = new Framework7({
     },
     // App routes
     routes: routes,
-
-
+    
     // Cordova Statusbar settings
     statusbar: {
         iosOverlaysWebView: true,
         androidOverlaysWebView: false,
     },
-
-
 });
 
 
@@ -36,7 +33,7 @@ var mainView = app.views.create('.view-main');
 $$(document).on('deviceready', function () {
     console.log("Device is ready!");
     var db = firebase.firestore();
-    consultarLocalStorage();
+    consultarLocalStorage(); // AUTOLOGIN
 
 });
 
@@ -116,6 +113,8 @@ function login() {
         });
 
 }
+
+//-------------------->>>>>>>>>>  AUTOLOGIN <<<<<<<<<<<-------------
 function consultarLocalStorage() {
 
     var usuarioGuardado = storage.getItem("usuario");
@@ -165,4 +164,4 @@ function LoguearseConLocal(u, c) {
         });
 
 };
-
+//-------------->>>>>>TERMINA AUTOLOGIN<<<<---------------
