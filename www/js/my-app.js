@@ -2,6 +2,8 @@ var $$ = Dom7;
 var storage = window.localStorage;
 var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
+var db; //base de datos
+var userCollection; //datos de los usuarios
 
 var app = new Framework7({
     root: '#app', // App root element
@@ -18,7 +20,6 @@ var app = new Framework7({
     },
     // App routes
     routes: routes,
-    
     // Cordova Statusbar settings
     statusbar: {
         iosOverlaysWebView: true,
@@ -32,7 +33,9 @@ var mainView = app.views.create('.view-main');
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
     console.log("Device is ready!");
-    var db = firebase.firestore();
+    db = firebase.firestore();
+
+    userCollection = db.collection("users");
     consultarLocalStorage(); // AUTOLOGIN
 
 });
@@ -56,7 +59,7 @@ $$(document).on('page:init', '.page[data-name="main"]', function (e) {
     console.log(e);
     console.log('estas en pagina main');
 })
-$$(document).on('page:init', '.page[data-name="form"]', function (e) {
+$$(document).on('page:init', '.page[data-name="register"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
     $$('#register').on('click', register);
@@ -66,6 +69,8 @@ $$(document).on('page:init', '.page[data-name="form"]', function (e) {
 function register() {
 
     var hasError = false;
+    var name = $$('#name').val();
+    var lastName = $$('#lastName').val();
     var email = $$('#email').val();
     var password = $$('#password').val();
     console.log(hasError, email, password);
@@ -76,7 +81,21 @@ function register() {
         alert(error);
         hasError = true;
     }).then(function (resp) {
+        console.log(resp);
         if (!hasError) {
+            //agregamos
+            userCollection.doc(email).set({
+                name: name,
+                lastName: lastName,
+                email: email,
+                admin: false,
+            })
+                .then(function (docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                })
+                .catch(function (error) {
+                    console.error("Error adding document: ", error);
+                });
             mainView.router.navigate("/");
         }
     });
@@ -107,8 +126,18 @@ function login() {
                 storage.setItem("usuario", usuarioAGuardar);
                 console.log("usuarioAGuardar: " + usuarioAGuardar);
                 console.log("usuario: " + usuario.email + "password: " + usuario.clave);
-
-                mainView.router.navigate('/tabs/');
+                //definir si es admin o user
+                userCollection.doc(logEmail).get().then(function (doc) {
+                    if (doc.exists) {
+                        console.log("Es un administrador", doc.data().admin);
+                        doc.data().admin ? mainView.router.navigate('/tabs-admin/') : mainView.router.navigate('/tabs/');
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                }).catch(function (error) {
+                    console.log("Error getting document:", error);
+                });
             }
         });
 
@@ -159,9 +188,17 @@ function LoguearseConLocal(u, c) {
             //En caso de que esté correcto el inicio de sesión y no haya errores, se dirige a la siguiente página
             if (huboError == 0) {
                 console.log("te logueaste");
-                mainView.router.navigate('/tabs/');
+                userCollection.doc(u).get().then(function (doc) {
+                    if (doc.exists) {
+                        console.log("Es un administrador", doc.data().admin);
+                        doc.data().admin ? mainView.router.navigate('/tabs-admin/') : mainView.router.navigate('/tabs/');
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                }
+                );
             }
-        });
-
-};
+        })
+}
 //-------------->>>>>>TERMINA AUTOLOGIN<<<<---------------
