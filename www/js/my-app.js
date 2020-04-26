@@ -3,7 +3,7 @@ var storage = window.localStorage;
 var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
 var db; //base de datos
-var userCollection; //datos de los usuarios
+var userCollection, booking; //datos de los usuarios
 
 var app = new Framework7({
     root: '#app', // App root element
@@ -36,6 +36,7 @@ $$(document).on('deviceready', function () {
     db = firebase.firestore();
 
     userCollection = db.collection("users");
+    booking = db.collection("booking");
     consultarLocalStorage(); // AUTOLOGIN
 
 });
@@ -63,6 +64,18 @@ $$(document).on('page:init', '.page[data-name="register"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
     $$('#register').on('click', register);
+})
+$$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    console.log(e);
+    console.log('estas en tabs admin');
+    $$('.logoutButton').on('click', doLogOut);
+})
+$$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    console.log(e);
+    console.log('estas en tabs de usuario');
+    $$('.logoutButton').on('click', doLogOut);
 })
 //FUNCTIONS
 //register
@@ -201,4 +214,10 @@ function LoguearseConLocal(u, c) {
             }
         })
 }
-//-------------->>>>>>TERMINA AUTOLOGIN<<<<---------------
+//-------------->>>>>>TERMINA AUTOLOGIN<<<<-------------
+//  LOGOUT
+function doLogOut(){
+    alert('borrando local storage');
+    localStorage.clear();
+    mainView.router.navigate('/');
+}

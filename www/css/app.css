@@ -29,5 +29,18 @@
     margin-left: 25vw;
     margin-top: 10vh;
 }
-
+.panel-logo{
+    height: 30vh;
+    width: 50vw;
+    background-image: url("../assets/images/pngocean.com.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 10%;
+}
+.panel-buttons{
+    margin-top: 6vh;
+}
+.card-content-home{
+    margin-top: 10vh;
+}
 /* Your app custom styles here */
