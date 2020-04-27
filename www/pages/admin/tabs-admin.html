@@ -1,0 +1,43 @@
+<div class="page" data-name="tabs-admin">
+    <div class="page">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="title">Barberias</div>
+                <div class="right">
+                    <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                            <span class="material-icons">menu</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+            <div class="block">
+                <div class="panel-logo"></div>
+                <div class="panel-buttons">
+                    <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar sesion</button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="toolbar tabbar toolbar-bottom">
+            <div class="toolbar-inner">
+                <!-- additional "data-route-tab-id" must match to tab's ID in the specified routes -->
+                <a href="/tabs-admin/" class="tab-link" data-route-tab-id="tabs-admin-1"><i
+                        class="f7-icons">house</i></a>
+                <a href="/tabs-admin/tabs-admin-2/" class="tab-link" data-route-tab-id="tabs-admin-2"><i
+                        class="f7-icons">list_bullet</i></a>
+                <a href="/tabs-admin/tabs-admin-3/" class="tab-link" data-route-tab-id="tabs-admin-3"><i
+                        class="f7-icons">person_crop_circle</i></a>
+            </div>
+        </div>
+        <!-- Additional "tabs-routable" is required on tabs -->
+        <div class="tabs tabs-routable">
+            <div class="tab page-content" id="tabs-admin-1"></div>
+            <div class="tab page-content" id="tabs-admin-2"></div>
+            <div class="tab page-content" id="tabs-admin-3"></div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,46 @@
 /* iOS Cordova Tweak */
-.device-cordova.device-ios {
-  height: 100vh;
-}
 
+.device-cordova.device-ios {
+    height: 100vh;
+}
+.login-input{
+    padding-left: 8vw;
+    padding-right: 12vw !important;
+}
+.register-page{
+    margin-top: 20vh;
+}
+.login-buttons{
+    width: 60vw;
+    margin-left: 20vw;
+}
+#login{
+    margin-top: 7vh;
+}
+#register{
+    margin-top: 7vh;
+}
+#main-logo {
+    height: 30vh;
+    width: 50vw;
+    background-image: url("../assets/images/pngocean.com.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 25vw;
+    margin-top: 10vh;
+}
+.panel-logo{
+    height: 30vh;
+    width: 50vw;
+    background-image: url("../assets/images/pngocean.com.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 10%;
+}
+.panel-buttons{
+    margin-top: 6vh;
+}
+.card-content-home{
+    margin-top: 10vh;
+}
 /* Your app custom styles here */
