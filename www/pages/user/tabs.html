@@ -87,19 +87,34 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="item-link item-content smart-select smart-select-init"
-                                            data-open-in="sheet">
+                                        <a href="#" class="item-link item-content">
                                             <div class="item-media"><i class="icon icon-f7 f7-icons">clock_fill</i>
                                             </div>
-                                            <div class="item-inner">
+                                            <div class="item-inner smart-select smart-select-init" data-open-in="sheet">
                                                 <div class="item-title">
-                                                    <div class="item-header">Horario</div>
-                                                    | Seleccionar
+                                                    <div class="item-header">DIA</div>
                                                 </div>
-                                                <div class="item-after"><select name="mac-windows">
-                                                        <option value="mac" selected>lunes 16:00</option>
-                                                        <option value="windows">lunes 18:00</option>
-                                                    </select></div>
+                                                <div class="item-after"><select name="dia">
+                                                        <option value="lunes" selected>lunes</option>
+                                                        <option value="martes">martes </option>
+                                                        <option value="miercoles">miercoles</option>
+                                                        <option value="jueves">jueves</option>
+                                                        <option value="viernes">viernes</option>
+                                                        <option value="sabado">sabado</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="item-inner smart-select smart-select-init" data-open-in="sheet">
+                                                <div class="item-header">HORA</div>
+                                                <div class="item-after"><select name="hora">
+                                                        <option value="lunes" selected>18:00</option>
+                                                        <option value="martes">19:00</option>
+                                                        <option value="miercoles">15:00</option>
+                                                        <option value="jueves">13:00</option>
+                                                        <option value="viernes">14:00</option>
+                                                        <option value="sabado">16:00</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </a>
                                     </li>
@@ -120,7 +135,8 @@
                                 <ul>
                                     <li>
                                         <label class="item-checkbox item-content">
-                                            <input id="service-0" type="checkbox" name="demo-media-checkbox" value="1" />
+                                            <input id="service-0" type="checkbox" name="demo-media-checkbox"
+                                                value="1" />
                                             <i class="icon icon-checkbox"></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
@@ -134,7 +150,8 @@
                                     </li>
                                     <li>
                                         <label class="item-checkbox item-content">
-                                            <input id="service-1" type="checkbox" name="demo-media-checkbox" value="2" />
+                                            <input id="service-1" type="checkbox" name="demo-media-checkbox"
+                                                value="2" />
                                             <i class="icon icon-checkbox"></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
@@ -148,7 +165,8 @@
                                     </li>
                                     <li>
                                         <label class="item-checkbox item-content">
-                                            <input id="service-2" type="checkbox" name="demo-media-checkbox" value="3" />
+                                            <input id="service-2" type="checkbox" name="demo-media-checkbox"
+                                                value="3" />
                                             <i class="icon icon-checkbox"></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
@@ -162,7 +180,8 @@
                                     </li>
                                     <li>
                                         <label class="item-checkbox item-content">
-                                            <input id="service-3" type="checkbox" name="demo-media-checkbox" value="4" />
+                                            <input id="service-3" type="checkbox" name="demo-media-checkbox"
+                                                value="4" />
                                             <i class="icon icon-checkbox"></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
@@ -174,12 +193,12 @@
                                             </div>
                                         </label>
                                     </li>
-
                                 </ul>
                             </div>
 
                             <p class="general-button">
-                                <a id="services-confirm" class="link popup-close button button-small button-round button-outline"
+                                <a id="services-confirm"
+                                    class="link popup-close button button-small button-round button-outline"
                                     href="#">Confimar</a>
                             </p>
 
@@ -215,7 +234,7 @@
                     </div>
                 </div>
                 <div class="page-content">
-
+                   
                 </div>
 
             </div>

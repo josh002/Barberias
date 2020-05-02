@@ -5,6 +5,8 @@ var usuarioLocal, claveLocal;
 var db; //base de datos
 var userCollection, booking; //datos de los usuarios
 var myServicesSelected;
+var services;
+var allServices = [];
 var myBooking = {
     mail: '',
     services: [false, false, false, false],
@@ -12,8 +14,14 @@ var myBooking = {
     time: 0,
     date: new Date(),
 }
+var newService = {
+    name: '',
+    description: '',
+    price: 0,
+    time: 0,
+}
 var servicesPrice = [300, 200, 100, 600]
-var servicesTime = [30, 15 , 10, 60]
+var servicesTime = [30, 15, 10, 60]
 var app = new Framework7({
     root: '#app', // App root element
 
@@ -46,10 +54,10 @@ $$(document).on('deviceready', function () {
 
     userCollection = db.collection("users");
     booking = db.collection("booking");
+    services = db.collection("services");
+
     consultarLocalStorage(); // AUTOLOGIN
-
-});
-
+})
 
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
@@ -78,36 +86,112 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
     console.log('estas en tabs admin');
+    getAllServices();
     $$('.logoutButton').on('click', doLogOut);
+    $$('#add-service').on('click', addNewService)
 })
+//--------------FUNCIONES DE ADMINISTRADOR---------------
+function addNewService() {
+    newService.name = $$('#new-service-name').val();
+    newService.description = $$('#new-service-description').val();
+    newService.price = $$('#new-service-price').val();
+    newService.time = $$('#new-service-time').val();
+    services.doc(newService.name).set({
+        name: newService.name,
+        description: newService.description,
+        price: newService.price,
+        time: newService.time,
+    }).then(function (docRef) {
+        console.log("Document written with ID: ", docRef);
+        console.log('servicio agregado', newService)
+        resetNewService();
+        getAllServices();
+        showServices();
+    })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+
+}
+function resetNewService() {
+    newService = {
+        name: '',
+        description: '',
+        price: 0,
+        time: 0,
+    };
+    $$('#new-service-name').val('');
+    $$('#new-service-description').val('');
+    $$('#new-service-price').val('');
+    $$('#new-service-time').val('');
+    console.log('reseteo de variable newService', newService)
+}
+function showServices() {
+
+    for (let i = 0; i < allServices.length; i++) {
+        $$('#actual-services').append(`
+        <div id="actual-services-${i}">
+        </div>`
+        );
+        $$('#actual-services-' + i).html(`
+        <div class="card">
+            <div class="card-header title-case">${allServices[i].name}</div>
+            <div class="card-content">
+                <div class="list simple-list">
+                    <ul>
+                        <li>Description: <span>${allServices[i].description}</span></li>
+                        <li>Tiempo: <span>${allServices[i].time}</span></li>
+                        <li>Precio: <span>${allServices[i].price}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `);
+    }
+
+}
+//--------------FIN FUNCIONES ADMINISTRADOR -------------
+// funciones compartidas
+function getAllServices() {
+    services.get().then(function (querySnapshot) {
+        var cont = 0;
+        querySnapshot.forEach(function (doc) {
+            allServices[cont] = doc.data();
+            cont++;
+        })
+        console.log('servicios disponibles', allServices);
+        showServices();
+    });
+}
+//fin funciones compartidas
 $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
-    console.log('estas en tabs de usuario');  
-    $$('.logoutButton').on('click', doLogOut); 
-   //empieza funcionalidades de los turnos
-   $$('#reset-price').on('click', resetPrice)
-   $$('#services-confirm').on('click', selectedServices)
+    console.log('estas en tabs de usuario');
+    $$('.logoutButton').on('click', doLogOut);
+    //empieza funcionalidades de los turnos
+    $$('#reset-price').on('click', resetPrice)
+    $$('#services-confirm').on('click', selectedServices)
 })
 //cambiar el total del precio
-function selectedServices(){
+function selectedServices() {
     for (let i = 0; i < 4; i++) {
-        $$('#service-' + i).is(':checked') ? myBooking.services[i] = true : myBooking.services[i] = false ;
+        $$('#service-' + i).is(':checked') ? myBooking.services[i] = true : myBooking.services[i] = false;
     }
-    updatePrice();    
+    updatePrice();
 }
 //resetear el precio
-function resetPrice(){
+function resetPrice() {
     myBooking.price = 0;
     myBooking.time = 0;
 }
 //cambiar precio total
-function updatePrice(){
+function updatePrice() {
     for (let i = 0; i < 4; i++) {
-       if(myBooking.services[i]){
+        if (myBooking.services[i]) {
             myBooking.price += servicesPrice[i];
             myBooking.time += servicesTime[i];
-       }         
+        }
     }
     $$('#total-price').text(myBooking.price);
     $$('#total-time').text(myBooking.time);
@@ -251,7 +335,7 @@ function LoguearseConLocal(u, c) {
 }
 //-------------->>>>>>TERMINA AUTOLOGIN<<<<-------------
 //  LOGOUT
-function doLogOut(){
+function doLogOut() {
     alert('borrando local storage');
     localStorage.clear();
     mainView.router.navigate('/');

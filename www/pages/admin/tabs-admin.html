@@ -1,5 +1,5 @@
 <div class="page" data-name="tabs-admin">
-    <div class="page-content">        
+    <div class="page-content">
         <!-- Views/Tabs container -->
         <div class="views tabs">
             <div class="toolbar tabbar toolbar-bottom">
@@ -28,61 +28,92 @@
                             </p>
                         </div>
                     </div>
-        
+
                 </div>
                 <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
                     <div class="block">
                         <div class="panel-logo"></div>
                         <div class="panel-buttons">
-                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
                                 sesion</button>
                         </div>
-        
+
                     </div>
                 </div>
                 <!-- FIN DE NAVBAR -->
                 <div class="page-content">
                     <div class="card card-content-home">
-                        <div class="card-header">Turnos</div>
-                        <div class="card-content card-content-padding">
-                            <form class="list form-store-data" id="my-form">
-                                <ul>
-                                    <li>
-                                        <p><a  class="button popup-open" href="#" data-popup=".popup-about">Open About Popup</a></p>
-                                    </li>
-                                    <li>
-                                        <div class="item-content item-input">
-                                            <div class="item-inner">
-                                                <div class="item-title item-label">Gender</div>
-                                                <div class="item-input-wrap">
-                                                    <select name="gender">
-                                                        <option value="male" selected>Male</option>
-                                                        <option value="female">Female</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                        <div class="card-header">Lista de Clientes</div>
+                        <div class="list card-content-padding">
+                            <ul>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Lunes</div>
+                                            <div class="item-after">Ver</div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </form>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Martes</div>
+                                            <div class="item-after">Ver</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Miercoles</div>
+                                            <div class="item-after">Ver</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Jueves</div>
+                                            <div class="item-after">Ver</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Viernes</div>
+                                            <div class="item-after">Ver</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><i
+                                                class="icon icon-f7 f7-icons">person_2_square_stack</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Sabado</div>
+                                            <div class="item-after">Ver</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="card-footer">Pedir turno</div>
-                        <p id="solo" value="15">soloo</p>
                     </div>
-                    <div class="popup popup-about">
-                        <div class="block">
-                          <p>About</p>
-                          <!-- Close Popup -->
-                          <button id="saludar" >saludar</button>
-                          
-                          <p><a class="link popup-close" href="#" >Close popup</a></p>
-                          <p>Lorem ipsum dolor sit amet...</p>
-                        </div>
-                      </div>
-                </div>                
+                </div>
             </div>
-
-            <!-- MIS TURNOS -->
+            <!-- POPUPS HOME -->
+            <!-- SERVICIOS -->
             <div id="view-catalog" class="view tab">
                 <div class="navbar">
                     <div class="navbar-bg"></div>
@@ -95,22 +126,95 @@
                             </p>
                         </div>
                     </div>
-        
+
                 </div>
                 <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
                     <div class="block">
                         <div class="panel-logo"></div>
                         <div class="panel-buttons">
-                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
                                 sesion</button>
                         </div>
-        
+
                     </div>
                 </div>
                 <div class="page-content">
-                    
-                </div>     
+                    <div class="card card-content-booking">
+                        <div class="card-header">Servicios</div>
+                        <div id="actual-services">
+                            
+                        </div>
+                        <p class="general-button booking-button"><a
+                                class="button button-small button-round button-outline popup-open"
+                                data-popup=".popup-services" href="#">Agregar servicio</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="popup popup-services">
+                    <div class="block">
+                        <p>AGREGAR SERVICIO</p>
+                        <!-- Close Popup -->
+                        <form class="list form-store-data" id="my-form">
+                            <ul>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Nombre</div>
+                                            <div class="item-input-wrap">
+                                                <input id="new-service-name" type="text" name="name"
+                                                    placeholder="Nombre del servicio" maxlength="20" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Precio</div>
+                                            <div class="item-input-wrap">
+                                                <input id="new-service-price" type="number" name="price"
+                                                    placeholder="300" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Duración en minutos</div>
+                                            <div class="item-input-wrap">
+                                                <input id="new-service-time" type="number" name="time" placeholder="30"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">Descripción</div>
+                                            <div class="item-input-wrap">
+                                                <input id="new-service-description" type="text" name="description"
+                                                    placeholder="Afeitado clasico" maxlength="30">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
 
+                        <p class="general-button">
+                            <a id="add-service" class="link popup-close button button-small button-round button-outline"
+                                href="#">Agregar</a>
+                        </p>
+                        <p class="general-button">
+                            <a class="link popup-close button button-small button-round button-outline"
+                                href="#">Cancelar</a>
+                        </p>
+
+                    </div>
+                </div>
             </div>
 
             <!--PERFIL-->
@@ -126,21 +230,23 @@
                             </p>
                         </div>
                     </div>
-        
+
                 </div>
                 <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
                     <div class="block">
                         <div class="panel-logo"></div>
                         <div class="panel-buttons">
-                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
                                 sesion</button>
-                        </div>        
+                        </div>
                     </div>
                 </div>
                 <div class="page-content">
-                    
-                </div>     
+
+                </div>
             </div>
         </div>
     </div>
+
 </div>
