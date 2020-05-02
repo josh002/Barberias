@@ -14,6 +14,14 @@
     width: 60vw;
     margin-left: 20vw;
 }
+.general-button{
+    padding-right: 20%;
+    padding-left: 20%;
+}
+.booking-button{
+    padding-bottom: 10%;
+    padding-top: 10%;
+}
 #login{
     margin-top: 7vh;
 }
@@ -41,6 +49,23 @@
     margin-top: 6vh;
 }
 .card-content-home{
-    margin-top: 10vh;
+    height: 82vh;
+}
+.card-content-home .card-header{
+    padding:5%;
+}
+.card-content-home .card-content{
+    padding: 10%;
+}
+.card-content-home .list ul li{
+    padding-top: 5% ;
+    padding-bottom: 5% ;
+}
+.popup-services {
+    padding: 3%;
+}
+.popup-services .list li{
+    padding-top: 5% ;
+    padding-bottom: 5% ;
 }
 /* Your app custom styles here */

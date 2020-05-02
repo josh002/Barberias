@@ -56,32 +56,7 @@ var routes = [
     // Will load page from tabs/index.html file
     url: './pages/user/tabs.html',
     // Pass "tabs" property to route, must be array with tab routes:
-    tabs: [
-      // First (default) tab has the same url as the page itself
-      {
-        // Tab path
-        path: '/',
-        // Tab id
-        id: 'tab-1',
-        // Fill this tab content from content string
-        url: './pages/user/tabs/home.html',
-      },
-      // Second tab
-      {
-        path: '/tab-2/',
-        id: 'tab-2',
-        // Fill this tab content with Ajax request:
-        url: './pages/user/tabs/appointment.html',
-    
-      },
-      // Third tab
-      {
-        path: '/tab-3/',
-        id: 'tab-3',
-        // Load this tab content as a component with Ajax request:
-        url: './pages/user/tabs/profile.html',
-      },
-    ]
+   
   },
   {
     path: '(.*)',

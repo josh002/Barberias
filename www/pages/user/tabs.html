@@ -1,41 +1,255 @@
 <div class="page" data-name="tabs">
-    <div class="page">
-        <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-                <div class="title">Barberias</div>
-                <div class="right">
-                    <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
-                            <span class="material-icons">menu</span>
-                        </a>
-                    </p>
+    <div class="page-content">
+        <!-- Views/Tabs container -->
+        <div class="views tabs">
+            <div class="toolbar tabbar toolbar-bottom">
+                <div class="toolbar-inner">
+                    <a href="#view-home" class="tab-link tab-link-active">
+                        <i class="f7-icons">house</i>
+                    </a>
+                    <a href="#view-catalog" class="tab-link">
+                        <i class="f7-icons">list_bullet</i>
+                    </a>
+                    <a href="#view-settings" class="tab-link">
+                        <i class="f7-icons">person_crop_circle</i>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
-            <div class="block">
-                <div class="panel-logo"></div>
-                <div class="panel-buttons">
-                    <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar sesion</button>
+            <!-- HOME -->
+            <div id="view-home" class="view view-main tab tab-active">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-                
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- FIN DE NAVBAR -->
+                <div class="page-content">
+                    <div class="card card-content-home">
+                        <div class="card-header">Turnos</div>
+                        <div class="card-content card-content-padding">
+                            <div class="list">
+                                <ul>
+                                    <li>
+                                        <a id="reset-price" class="item-link item-content popup-open"
+                                            data-popup=".popup-services">
+                                            <div class="item-media"><i
+                                                    class="icon icon-f7 f7-icons">cart_fill_badge_plus</i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Servicios</div>
+                                                    | Elegir servicios
+                                                </div>
+                                                <div class="item-after">Editar</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="item-link item-content">
+                                            <div class="item-media"><i
+                                                    class="icon icon-f7 f7-icons">money_dollar_circle_fill</i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Precio total</div>
+                                                    | $ <span id="total-price">1500</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="item-link item-content">
+                                            <div class="item-media"><i class="icon icon-f7 f7-icons">timer_fill</i>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Duración total</div>
+                                                    | <span id="total-time">60</span> min
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="item-link item-content smart-select smart-select-init"
+                                            data-open-in="sheet">
+                                            <div class="item-media"><i class="icon icon-f7 f7-icons">clock_fill</i>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Horario</div>
+                                                    | Seleccionar
+                                                </div>
+                                                <div class="item-after"><select name="mac-windows">
+                                                        <option value="mac" selected>lunes 16:00</option>
+                                                        <option value="windows">lunes 18:00</option>
+                                                    </select></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="general-button booking-button"><a
+                                    class="button button-small button-round button-outline " href="#">Reservar Turno</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="popup popup-services">
+                        <div class="block">
+                            <p>SERVICIOS</p>
+                            <!-- Close Popup -->
+                            <div class="list media-list">
+                                <ul>
+                                    <li>
+                                        <label class="item-checkbox item-content">
+                                            <input id="service-0" type="checkbox" name="demo-media-checkbox" value="1" />
+                                            <i class="icon icon-checkbox"></i>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">Corte</div>
+                                                    <div class="item-after">Precio: $ 300</div>
+                                                </div>
+                                                <div class="item-subtitle">Todo tipo de cortes</div>
+                                                <div class="item-text">Duracion aprox: 30 min</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="item-checkbox item-content">
+                                            <input id="service-1" type="checkbox" name="demo-media-checkbox" value="2" />
+                                            <i class="icon icon-checkbox"></i>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">Afeitado Tradicional</div>
+                                                    <div class="item-after">Precio: $ 200</div>
+                                                </div>
+                                                <div class="item-subtitle">Tu afeitado clásico perfecto</div>
+                                                <div class="item-text">Duracion aprox: 15 min</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="item-checkbox item-content">
+                                            <input id="service-2" type="checkbox" name="demo-media-checkbox" value="3" />
+                                            <i class="icon icon-checkbox"></i>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">Diseño</div>
+                                                    <div class="item-after">Precio: $ 100</div>
+                                                </div>
+                                                <div class="item-subtitle">Diseño a pedido</div>
+                                                <div class="item-text">Duracion aprox: 10 min</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="item-checkbox item-content">
+                                            <input id="service-3" type="checkbox" name="demo-media-checkbox" value="4" />
+                                            <i class="icon icon-checkbox"></i>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">Hair tatto</div>
+                                                    <div class="item-after">Precio: $ 600</div>
+                                                </div>
+                                                <div class="item-subtitle"> Micropigmentación del cuero cabelludo</div>
+                                                <div class="item-text">Duracion aprox: 60 min</div>
+                                            </div>
+                                        </label>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <p class="general-button">
+                                <a id="services-confirm" class="link popup-close button button-small button-round button-outline"
+                                    href="#">Confimar</a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="toolbar tabbar toolbar-bottom">
-            <div class="toolbar-inner">
-                <!-- additional "data-route-tab-id" must match to tab's ID in the specified routes -->
-                <a href="/tabs/" class="tab-link" data-route-tab-id="tab-1"><i class="f7-icons">house</i></a>
-                <a href="/tabs/tab-2/" class="tab-link" data-route-tab-id="tab-2"><i
-                        class="f7-icons">list_bullet</i></a>
-                <a href="/tabs/tab-3/" class="tab-link" data-route-tab-id="tab-3"><i
-                        class="f7-icons">person_crop_circle</i></a>
+
+            <!-- MIS TURNOS -->
+            <div id="view-catalog" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="page-content">
+
+                </div>
+
             </div>
-        </div>
-        <!-- Additional "tabs-routable" is required on tabs -->
-        <div class="tabs tabs-routable">
-            <div class="tab page-content" id="tab-1"></div>
-            <div class="tab page-content" id="tab-2"></div>
-            <div class="tab page-content" id="tab-3"></div>
+
+            <!--PERFIL-->
+            <div id="view-settings" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button
+                                class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

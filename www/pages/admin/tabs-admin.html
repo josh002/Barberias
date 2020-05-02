@@ -1,43 +1,146 @@
 <div class="page" data-name="tabs-admin">
-    <div class="page">
-        <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-                <div class="title">Barberias</div>
-                <div class="right">
-                    <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
-                            <span class="material-icons">menu</span>
-                        </a>
-                    </p>
+    <div class="page-content">        
+        <!-- Views/Tabs container -->
+        <div class="views tabs">
+            <div class="toolbar tabbar toolbar-bottom">
+                <div class="toolbar-inner">
+                    <a href="#view-home" class="tab-link tab-link-active">
+                        <i class="f7-icons">house</i>
+                    </a>
+                    <a href="#view-catalog" class="tab-link">
+                        <i class="f7-icons">list_bullet</i>
+                    </a>
+                    <a href="#view-settings" class="tab-link">
+                        <i class="f7-icons">person_crop_circle</i>
+                    </a>
                 </div>
+            </div>
+            <!-- HOME -->
+            <div id="view-home" class="view view-main tab tab-active">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+        
+                </div>
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>
+        
+                    </div>
+                </div>
+                <!-- FIN DE NAVBAR -->
+                <div class="page-content">
+                    <div class="card card-content-home">
+                        <div class="card-header">Turnos</div>
+                        <div class="card-content card-content-padding">
+                            <form class="list form-store-data" id="my-form">
+                                <ul>
+                                    <li>
+                                        <p><a  class="button popup-open" href="#" data-popup=".popup-about">Open About Popup</a></p>
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-title item-label">Gender</div>
+                                                <div class="item-input-wrap">
+                                                    <select name="gender">
+                                                        <option value="male" selected>Male</option>
+                                                        <option value="female">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="card-footer">Pedir turno</div>
+                        <p id="solo" value="15">soloo</p>
+                    </div>
+                    <div class="popup popup-about">
+                        <div class="block">
+                          <p>About</p>
+                          <!-- Close Popup -->
+                          <button id="saludar" >saludar</button>
+                          
+                          <p><a class="link popup-close" href="#" >Close popup</a></p>
+                          <p>Lorem ipsum dolor sit amet...</p>
+                        </div>
+                      </div>
+                </div>                
             </div>
 
-        </div>
-        <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
-            <div class="block">
-                <div class="panel-logo"></div>
-                <div class="panel-buttons">
-                    <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar sesion</button>
+            <!-- MIS TURNOS -->
+            <div id="view-catalog" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+        
                 </div>
-                
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>
+        
+                    </div>
+                </div>
+                <div class="page-content">
+                    
+                </div>     
+
             </div>
-        </div>
-        <div class="toolbar tabbar toolbar-bottom">
-            <div class="toolbar-inner">
-                <!-- additional "data-route-tab-id" must match to tab's ID in the specified routes -->
-                <a href="/tabs-admin/" class="tab-link" data-route-tab-id="tabs-admin-1"><i
-                        class="f7-icons">house</i></a>
-                <a href="/tabs-admin/tabs-admin-2/" class="tab-link" data-route-tab-id="tabs-admin-2"><i
-                        class="f7-icons">list_bullet</i></a>
-                <a href="/tabs-admin/tabs-admin-3/" class="tab-link" data-route-tab-id="tabs-admin-3"><i
-                        class="f7-icons">person_crop_circle</i></a>
+
+            <!--PERFIL-->
+            <div id="view-settings" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">Barberias</div>
+                        <div class="right">
+                            <p><a class="button panel-open link" href="#" data-panel=".panel-right-1">
+                                    <span class="material-icons">menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+        
+                </div>
+                <div class="panel panel-right panel-right-1 panel-cover panel-resizable panel-init">
+                    <div class="block">
+                        <div class="panel-logo"></div>
+                        <div class="panel-buttons">
+                            <button class="button button-small button-round button-outline logoutButton panel-close">Cerrar
+                                sesion</button>
+                        </div>        
+                    </div>
+                </div>
+                <div class="page-content">
+                    
+                </div>     
             </div>
-        </div>
-        <!-- Additional "tabs-routable" is required on tabs -->
-        <div class="tabs tabs-routable">
-            <div class="tab page-content" id="tabs-admin-1"></div>
-            <div class="tab page-content" id="tabs-admin-2"></div>
-            <div class="tab page-content" id="tabs-admin-3"></div>
         </div>
     </div>
 </div>

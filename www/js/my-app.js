@@ -4,7 +4,16 @@ var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
 var db; //base de datos
 var userCollection, booking; //datos de los usuarios
-
+var myServicesSelected;
+var myBooking = {
+    mail: '',
+    services: [false, false, false, false],
+    price: 0,
+    time: 0,
+    date: new Date(),
+}
+var servicesPrice = [300, 200, 100, 600]
+var servicesTime = [30, 15 , 10, 60]
 var app = new Framework7({
     root: '#app', // App root element
 
@@ -74,10 +83,36 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
 $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
-    console.log('estas en tabs de usuario');
-    $$('.logoutButton').on('click', doLogOut);
+    console.log('estas en tabs de usuario');  
+    $$('.logoutButton').on('click', doLogOut); 
+   //empieza funcionalidades de los turnos
+   $$('#reset-price').on('click', resetPrice)
+   $$('#services-confirm').on('click', selectedServices)
 })
-//FUNCTIONS
+//cambiar el total del precio
+function selectedServices(){
+    for (let i = 0; i < 4; i++) {
+        $$('#service-' + i).is(':checked') ? myBooking.services[i] = true : myBooking.services[i] = false ;
+    }
+    updatePrice();    
+}
+//resetear el precio
+function resetPrice(){
+    myBooking.price = 0;
+    myBooking.time = 0;
+}
+//cambiar precio total
+function updatePrice(){
+    for (let i = 0; i < 4; i++) {
+       if(myBooking.services[i]){
+            myBooking.price += servicesPrice[i];
+            myBooking.time += servicesTime[i];
+       }         
+    }
+    $$('#total-price').text(myBooking.price);
+    $$('#total-time').text(myBooking.time);
+}
+
 //register
 function register() {
 
