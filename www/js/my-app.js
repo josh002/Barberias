@@ -20,6 +20,7 @@ var newService = {
     price: 0,
     time: 0,
 }
+var pickerInline, today;
 var servicesPrice = [300, 200, 100, 600]
 var servicesTime = [30, 15, 10, 60]
 var app = new Framework7({
@@ -86,7 +87,13 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
     console.log('estas en tabs admin');
-    getAllServices();
+    getAllServices(true);
+    
+    $$('#edit-schedule').on('click', startPickers);
+    $$('#cancel-edit-schedule').on('click', cancelEdit);
+    $$('#confirm-edit-schedule').on('click', confirmEdit)
+    $$('.ok-right-button').on('click', hidePicker);
+    $$('#start-hour').on('click', showpicker);
     $$('.logoutButton').on('click', doLogOut);
     $$('#add-service').on('click', addNewService)
 })
@@ -105,7 +112,7 @@ function addNewService() {
         console.log("Document written with ID: ", docRef);
         console.log('servicio agregado', newService)
         resetNewService();
-        getAllServices();
+        getAllServices(true);
         showServices();
     })
         .catch(function (error) {
@@ -150,9 +157,76 @@ function showServices() {
     }
 
 }
-//--------------FIN FUNCIONES ADMINISTRADOR -------------
+//--------------DATE TIME PICKER------------
+function confirmEdit (){
+    $$('#start-picker-date-container').show();
+    pickerInline.destroy();
+    $$('#start-picker-date-container').empty();    
+}
+function cancelEdit(){
+    $$('#start-picker-date-container').show();
+    pickerInline.destroy();
+    $$('#start-picker-date-container').empty();   
+}
+function hidePicker() {
+    $$('#start-picker-date-container').hide();
+    $$('.ok-right-button').hide();
+}
+function showpicker() {
+    $$('#start-picker-date-container').show();
+    $$('.ok-right-button').show();
+}
+function startPickers() {
+    $$('.ok-right-button').hide();
+    today = new Date();
+    pickerInline = app.picker.create({
+        containerEl: '#start-picker-date-container',
+        inputEl: '#start-picker-date',
+        toolbar: false,
+        rotateEffect: true,
+        value: [
+            today.getHours(),
+            today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
+        ],
+        formatValue: function (values, displayValues) {
+            return displayValues[0] + ' : ' + values[1];
+        },
+        cols: [
+            // Space divider
+            {
+                divider: true,
+                content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Divider
+            {
+                divider: true,
+                content: ':'
+            },
+            // Minutes
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            }
+        ],
+    });
+    $$('#start-picker-date-container').hide();
+}
+
+//XXXXXXX FIN DATE TIME PICKEER XXXXXXXXXXXXXXXXXXX
+//------------------------------------FIN FUNCIONES ADMINISTRADOR -------------
 // funciones compartidas
-function getAllServices() {
+function getAllServices(isAdmin) {
     services.get().then(function (querySnapshot) {
         var cont = 0;
         querySnapshot.forEach(function (doc) {
@@ -160,19 +234,43 @@ function getAllServices() {
             cont++;
         })
         console.log('servicios disponibles', allServices);
-        showServices();
+        isAdmin ? showServices() : showUserServices();
     });
 }
 //fin funciones compartidas
 $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
-    // Do something here when page with data-name="about" attribute loaded and initialized
+
     console.log(e);
     console.log('estas en tabs de usuario');
+    getAllServices(false);
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
     $$('#reset-price').on('click', resetPrice)
     $$('#services-confirm').on('click', selectedServices)
 })
+//-------------------------------FUNCIONES USUSARIO---------------------
+//mostrar servicios
+function showUserServices() {
+    for (let i = 0; i < allServices.length; i++) {
+        $$('#user-services-list').append(`
+        <li>
+             <label class="item-checkbox item-content">
+                 <input id="service-0" type="checkbox" name="demo-media-checkbox"
+                     value="${i + 1}" />
+                 <i class="icon icon-checkbox"></i>
+                 <div class="item-inner">
+                     <div class="item-title-row">
+                         <div class="item-title">${allServices[i].name}</div>
+                         <div class="item-after">Precio: $ ${allServices[i].price}</div>
+                     </div>
+                     <div class="item-subtitle">${allServices[i].description}</div>
+                     <div class="item-text">Duracion aprox: ${allServices[i].time} min</div>
+                 </div>
+             </label>
+         </li>
+    `);
+    }
+}
 //cambiar el total del precio
 function selectedServices() {
     for (let i = 0; i < 4; i++) {
@@ -336,7 +434,7 @@ function LoguearseConLocal(u, c) {
 //-------------->>>>>>TERMINA AUTOLOGIN<<<<-------------
 //  LOGOUT
 function doLogOut() {
-    alert('borrando local storage');
+
     localStorage.clear();
     mainView.router.navigate('/');
 }

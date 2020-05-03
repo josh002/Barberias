@@ -66,11 +66,14 @@
     padding-bottom: 5% ;
 }
 .popup-services {
-    padding: 3%;
+    padding: 3% 3% 0 3%;
 }
-.popup-services .list li{
-    padding-top: 5% ;
-    padding-bottom: 5% ;
+.services-confirm-button{
+    height: 40px !important;
+}
+.ok-right-button{
+    width: 10vw;
+    float: right;
 }
 /* booking view */
 
