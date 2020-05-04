@@ -4,6 +4,7 @@ var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
 var db; //base de datos
 var userCollection, booking; //datos de los usuarios
+var smartSelectDay, smartSelectHour;
 var myServicesSelected;
 var services;
 var allServices = [];
@@ -321,10 +322,18 @@ $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
 
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
-    $$('#select-my-services').on('click', selectMyServices)
-    $$('#services-confirm').on('click', selectedServices)
+    $$('#select-my-services').on('click', selectMyServices);
+    $$('#services-confirm').on('click', selectedServices);
+    $$('#confirm-booking').on('click', addBooking)
 })
 //-------------------------------FUNCIONES USUSARIO---------------------
+//agregar el turno a la base de datos 
+function addBooking(){
+    smartSelectDay = app.smartSelect.get('#selected-day');
+    smartSelectHour = app.smartSelect.get('#selected-hour');
+   console.log('Turno: dia seleccionado:',smartSelectDay.getValue());
+   console.log('Turno: hora seleccionada:',smartSelectHour.getValue());
+}
 //mostrar servicios
 function showUserServices() {
     for (let i = 0; i < allServices.length; i++) {

@@ -90,11 +90,11 @@
                                         <a href="#" class="item-link item-content">
                                             <div class="item-media"><i class="icon icon-f7 f7-icons">clock_fill</i>
                                             </div>
-                                            <div class="item-inner smart-select smart-select-init" data-open-in="sheet">
+                                            <div id="selected-day" class="item-inner smart-select smart-select-init" data-open-in="sheet">
                                                 <div class="item-title">
                                                     <div class="item-header">DIA</div>
                                                 </div>
-                                                <div class="item-after"><select name="dia">
+                                                <div class="item-after"><select  name="dia">
                                                         <option value="lunes" selected>lunes</option>
                                                         <option value="martes">martes </option>
                                                         <option value="miercoles">miercoles</option>
@@ -104,15 +104,15 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="item-inner smart-select smart-select-init" data-open-in="sheet">
+                                            <div id="selected-hour" class="item-inner smart-select smart-select-init" data-open-in="sheet">
                                                 <div class="item-header">HORA</div>
                                                 <div class="item-after"><select name="hora">
-                                                        <option value="lunes" selected>18:00</option>
-                                                        <option value="martes">19:00</option>
-                                                        <option value="miercoles">15:00</option>
-                                                        <option value="jueves">13:00</option>
-                                                        <option value="viernes">14:00</option>
-                                                        <option value="sabado">16:00</option>
+                                                        <option value="18:00" selected>18:00</option>
+                                                        <option value="19:00">19:00</option>
+                                                        <option value="15:00">15:00</option>
+                                                        <option value="13:00">13:00</option>
+                                                        <option value="14:00">14:00</option>
+                                                        <option value="16:00">16:00</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="general-button booking-button"><a
+                            <p id="confirm-booking"class="general-button booking-button"><a
                                     class="button button-small button-round button-outline " href="#">Reservar Turno</a>
                             </p>
                         </div>
