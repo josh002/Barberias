@@ -263,11 +263,13 @@
                                     <div class="card">
                                         <div class="card-header">Definir Horario</div>
                                         <div class="card-content card-content-padding">
-                                            <div class="list no-margin">
+                                            <!-- DESDE: -->
+                                            <div id="margin-start-picker" class="list no-margin ">
                                                 <ul>
                                                     <li>
                                                         <a id="start-hour" class="item-link item-content">
-                                                            <div class="item-media"><i class="icon icon-f7 f7-icons">clock</i></div>
+                                                            <div class="item-media"><i
+                                                                    class="icon icon-f7 f7-icons">clock</i></div>
                                                             <div class="item-inner">
                                                                 <div class="item-title"> Desde:</div>
                                                                 <div class="item-after"><input type="text"
@@ -279,16 +281,46 @@
 
                                                     </li>
                                                 </ul>
-                                            </div>
-                                            <div id="start-picker" class="block block-strong no-padding no-margin margin-bottom">
-                                                <div id="start-picker-date-container">
+                                                <div id="start-picker"
+                                                    class="block block-strong no-padding no-margin margin-bottom">
+                                                    <div id="start-picker-date-container">
+                                                    </div>
                                                 </div>
+                                                <button
+                                                    class="button button-small button-round button-outline ok-right-button">
+                                                    ok
+                                                </button>
                                             </div>
-                                            <button class="button button-small button-round button-outline ok-right-button">
-                                                ok
-                                            </button>
+
+                                            <!-- HASTA -->
+                                            <div id="margin-end-picker" class="list no-margin ">
+                                                <ul>
+                                                    <li>
+                                                        <a id="end-hour" class="item-link item-content">
+                                                            <div class="item-media"><i
+                                                                    class="icon icon-f7 f7-icons">clock_fill</i></div>
+                                                            <div class="item-inner">
+                                                                <div class="item-title"> Hasta:</div>
+                                                                <div class="item-after"><input type="text"
+                                                                        placeholder="Date Time" readonly="readonly"
+                                                                        id="end-picker-date" />
+                                                                </div>
+                                                            </div>
+                                                        </a>
+
+                                                    </li>
+                                                </ul>
+                                                <div id="end-picker"
+                                                    class="block block-strong no-padding no-margin margin-bottom">
+                                                    <div id="end-picker-date-container">
+                                                    </div>
+                                                </div>
+                                                <button class="button button-small button-round button-outline ok-right-button-2">
+                                                    ok
+                                                </button>
+                                            </div>
                                         </div>
-                                        
+
 
                                         <p class="general-button">
                                             <a id="confirm-edit-schedule"

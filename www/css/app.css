@@ -75,6 +75,16 @@
     width: 10vw;
     float: right;
 }
+.ok-right-button-2{
+    width: 10vw;
+    float: right;
+}
+#margin-start-picker{
+    margin-top: 4vh !important;
+}
+#margin-end-picker{
+    margin-top: 8vh !important;
+}
 /* booking view */
 
 /* Your app custom styles here */

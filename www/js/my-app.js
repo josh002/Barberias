@@ -20,7 +20,8 @@ var newService = {
     price: 0,
     time: 0,
 }
-var pickerInline, today;
+var schedule;
+var pickerInline, pickerInline2, today;
 var servicesPrice = [300, 200, 100, 600]
 var servicesTime = [30, 15, 10, 60]
 var app = new Framework7({
@@ -56,6 +57,7 @@ $$(document).on('deviceready', function () {
     userCollection = db.collection("users");
     booking = db.collection("booking");
     services = db.collection("services");
+    schedule = db.collection("schedule");
 
     consultarLocalStorage(); // AUTOLOGIN
 })
@@ -93,7 +95,9 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
     $$('#cancel-edit-schedule').on('click', cancelEdit);
     $$('#confirm-edit-schedule').on('click', confirmEdit)
     $$('.ok-right-button').on('click', hidePicker);
+    $$('.ok-right-button-2').on('click', hideEndPicker);
     $$('#start-hour').on('click', showpicker);
+    $$('#end-hour').on('click', showEndpicker)
     $$('.logoutButton').on('click', doLogOut);
     $$('#add-service').on('click', addNewService)
 })
@@ -158,27 +162,56 @@ function showServices() {
 
 }
 //--------------DATE TIME PICKER------------
-function confirmEdit (){
+function confirmEdit (){    
+    console.log('start hour',$$('#start-picker-date').val());    
+    console.log('end hour',$$('#end-picker-date').val());
+    schedule.doc("horarios").set({
+        startTime: $$('#start-picker-date').val(),
+        endTime: $$('#end-picker-date').val(),
+    })
+    .then(function() {
+        alert("Horario cambiado correctamente");
+    })
+    .catch(function(error) {
+       alert("error al cambiar horario");
+       console.log('error al cambiar horario:',error)
+    });
     $$('#start-picker-date-container').show();
+    $$('#end-picker-date-container').show();
     pickerInline.destroy();
+    pickerInline2.destroy();
     $$('#start-picker-date-container').empty();    
+    $$('#end-picker-date-container').empty();    
 }
 function cancelEdit(){
     $$('#start-picker-date-container').show();
+    $$('#end-picker-date-container').show();
     pickerInline.destroy();
-    $$('#start-picker-date-container').empty();   
+    pickerInline2.destroy();
+    $$('#start-picker-date-container').empty();    
+    $$('#end-picker-date-container').empty();    
 }
 function hidePicker() {
     $$('#start-picker-date-container').hide();
     $$('.ok-right-button').hide();
 }
+function hideEndPicker(){
+    $$('#end-picker-date-container').hide();
+    $$('.ok-right-button-2').hide();
+}
 function showpicker() {
     $$('#start-picker-date-container').show();
     $$('.ok-right-button').show();
 }
+function showEndpicker(){
+    $$('#end-picker-date-container').show();
+    $$('.ok-right-button-2').show();
+}
 function startPickers() {
     $$('.ok-right-button').hide();
+    $$('.ok-right-button-2').hide();
     today = new Date();
+    // para usar el desde
     pickerInline = app.picker.create({
         containerEl: '#start-picker-date-container',
         inputEl: '#start-picker-date',
@@ -220,7 +253,50 @@ function startPickers() {
             }
         ],
     });
+    //para usar hasta
+    pickerInline2 = app.picker.create({
+        containerEl: '#end-picker-date-container',
+        inputEl: '#end-picker-date',
+        toolbar: false,
+        rotateEffect: true,
+        value: [
+            today.getHours(),
+            today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
+        ],
+        formatValue: function (values, displayValues) {
+            return displayValues[0] + ' : ' + values[1];
+        },
+        cols: [
+            // Space divider
+            {
+                divider: true,
+                content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Divider
+            {
+                divider: true,
+                content: ':'
+            },
+            // Minutes
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            }
+        ],
+    });
     $$('#start-picker-date-container').hide();
+    $$('#end-picker-date-container').hide();
 }
 
 //XXXXXXX FIN DATE TIME PICKEER XXXXXXXXXXXXXXXXXXX
