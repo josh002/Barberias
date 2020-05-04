@@ -9,7 +9,7 @@ var services;
 var allServices = [];
 var myBooking = {
     mail: '',
-    services: [false, false, false, false],
+    services: [],
     price: 0,
     time: 0,
     date: new Date(),
@@ -90,7 +90,7 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
     console.log(e);
     console.log('estas en tabs admin');
     getAllServices(true);
-    
+
     $$('#edit-schedule').on('click', startPickers);
     $$('#cancel-edit-schedule').on('click', cancelEdit);
     $$('#confirm-edit-schedule').on('click', confirmEdit)
@@ -162,40 +162,40 @@ function showServices() {
 
 }
 //--------------DATE TIME PICKER------------
-function confirmEdit (){    
-    console.log('start hour',$$('#start-picker-date').val());    
-    console.log('end hour',$$('#end-picker-date').val());
+function confirmEdit() {
+    console.log('start hour', $$('#start-picker-date').val());
+    console.log('end hour', $$('#end-picker-date').val());
     schedule.doc("horarios").set({
         startTime: $$('#start-picker-date').val(),
         endTime: $$('#end-picker-date').val(),
     })
-    .then(function() {
-        alert("Horario cambiado correctamente");
-    })
-    .catch(function(error) {
-       alert("error al cambiar horario");
-       console.log('error al cambiar horario:',error)
-    });
+        .then(function () {
+            alert("Horario cambiado correctamente");
+        })
+        .catch(function (error) {
+            alert("error al cambiar horario");
+            console.log('error al cambiar horario:', error)
+        });
     $$('#start-picker-date-container').show();
     $$('#end-picker-date-container').show();
     pickerInline.destroy();
     pickerInline2.destroy();
-    $$('#start-picker-date-container').empty();    
-    $$('#end-picker-date-container').empty();    
+    $$('#start-picker-date-container').empty();
+    $$('#end-picker-date-container').empty();
 }
-function cancelEdit(){
+function cancelEdit() {
     $$('#start-picker-date-container').show();
     $$('#end-picker-date-container').show();
     pickerInline.destroy();
     pickerInline2.destroy();
-    $$('#start-picker-date-container').empty();    
-    $$('#end-picker-date-container').empty();    
+    $$('#start-picker-date-container').empty();
+    $$('#end-picker-date-container').empty();
 }
 function hidePicker() {
     $$('#start-picker-date-container').hide();
     $$('.ok-right-button').hide();
 }
-function hideEndPicker(){
+function hideEndPicker() {
     $$('#end-picker-date-container').hide();
     $$('.ok-right-button-2').hide();
 }
@@ -203,7 +203,7 @@ function showpicker() {
     $$('#start-picker-date-container').show();
     $$('.ok-right-button').show();
 }
-function showEndpicker(){
+function showEndpicker() {
     $$('#end-picker-date-container').show();
     $$('.ok-right-button-2').show();
 }
@@ -318,10 +318,10 @@ $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
 
     console.log(e);
     console.log('estas en tabs de usuario');
-    getAllServices(false);
+
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
-    $$('#reset-price').on('click', resetPrice)
+    $$('#select-my-services').on('click', selectMyServices)
     $$('#services-confirm').on('click', selectedServices)
 })
 //-------------------------------FUNCIONES USUSARIO---------------------
@@ -331,8 +331,8 @@ function showUserServices() {
         $$('#user-services-list').append(`
         <li>
              <label class="item-checkbox item-content">
-                 <input id="service-0" type="checkbox" name="demo-media-checkbox"
-                     value="${i + 1}" />
+                 <input id="service-${i}" type="checkbox" name="demo-media-checkbox"
+                     value="${allServices[i].name}" />
                  <i class="icon icon-checkbox"></i>
                  <div class="item-inner">
                      <div class="item-title-row">
@@ -347,24 +347,32 @@ function showUserServices() {
     `);
     }
 }
-//cambiar el total del precio
+//cambiar el total del precio y borrar los servicios pintado
 function selectedServices() {
-    for (let i = 0; i < 4; i++) {
-        $$('#service-' + i).is(':checked') ? myBooking.services[i] = true : myBooking.services[i] = false;
+    for (let i = 0; i < allServices.length; i++) {
+        if ($$('#service-' + i).is(':checked')) {
+            myBooking.services.push($$('#service-' + i).val());
+        }
     }
+    console.log(myBooking.services);
     updatePrice();
+    $$('#user-services-list').empty()
 }
-//resetear el precio
-function resetPrice() {
+//selecccionar mis servicios y resetear el precio
+function selectMyServices() {
+    myBooking.services = [];
+    getAllServices(false);
     myBooking.price = 0;
     myBooking.time = 0;
 }
 //cambiar precio total
 function updatePrice() {
-    for (let i = 0; i < 4; i++) {
-        if (myBooking.services[i]) {
-            myBooking.price += servicesPrice[i];
-            myBooking.time += servicesTime[i];
+    for (let i = 0; i < allServices.length; i++) {
+        for (let x = 0; x < allServices.length; x++) {
+            if (myBooking.services[i] == allServices[x].name) {
+                myBooking.price += parseInt(allServices[x].price);
+                myBooking.time += parseInt(allServices[x].time);
+            }
         }
     }
     $$('#total-price').text(myBooking.price);
