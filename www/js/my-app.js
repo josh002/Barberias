@@ -3,6 +3,8 @@ var storage = window.localStorage;
 var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
 var db; //base de datos
+var mipruebaSelect;
+var contadorPrueba = 0;
 var userCollection, booking; //datos de los usuarios
 var smartSelectDay, smartSelectHour;
 var myServicesSelected;
@@ -23,8 +25,11 @@ var newService = {
 }
 var schedule;
 var pickerInline, pickerInline2, today;
-var servicesPrice = [300, 200, 100, 600]
-var servicesTime = [30, 15, 10, 60]
+var servicesPrice = [300, 200, 100, 600];
+var servicesTime = [30, 15, 10, 60];
+//horarios de atencion
+var startHour;
+var endHour;
 var app = new Framework7({
     root: '#app', // App root element
 
@@ -53,16 +58,51 @@ var mainView = app.views.create('.view-main');
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
     console.log("Device is ready!");
-    db = firebase.firestore();
 
+    //base de datos
+    db = firebase.firestore();
     userCollection = db.collection("users");
     booking = db.collection("booking");
     services = db.collection("services");
     schedule = db.collection("schedule");
-
     consultarLocalStorage(); // AUTOLOGIN
+    getStartEndHours();
 })
+//para iniciarlizar todas las colecciones de minutos por semana
+function creatingBookings() {
+    var dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+    for (let x = 0; x < dias.length; x++) {
+        for (let i = 0; i < 23; i++) {
+            let hora = i;
+            hora < 10 ? hora = '0' + i : hora = hora.toString();
+            booking.doc(`${dias[x]}/${hora}/minutos`).set({
+                lleno: false,
+                cantidad: 0,
+            }).then(function () {
+                console.log("Document successfully written!");
+            }).catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+        }
+    }
+}
+//traer horario de apertura y de cierre
+function getStartEndHours() {
+    schedule.doc("horarios").get().then(function (doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            startHour = parseInt((doc.data().startTime.toString().split(':'))[0]);
+            endHour = parseInt((doc.data().endTime.toString().split(':'))[0]);
+            console.log('horario de apertura', startHour, 'horario de cierre:', endHour);
+        } else {
+            console.log("No such document!");
+        }
+    }).catch(function (error) {
+        console.log("Error getting document:", error);
+    });
 
+}
+// mostrar horas disponibles por dia
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
     // Do something here when page loaded and initialized
@@ -319,20 +359,38 @@ $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
 
     console.log(e);
     console.log('estas en tabs de usuario');
-
+    // smartSelectDay = app.smartSelect.get('#selected-day');                     
+    // smartSelectHour = app.smartSelect.get('#selected-hour'); 
+    // smartSelectDay.open();
+    // smartSelectHour.open();
+    getBookingHours();
+   
+    
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
     $$('#select-my-services').on('click', selectMyServices);
     $$('#services-confirm').on('click', selectedServices);
-    $$('#confirm-booking').on('click', addBooking)
+    $$('#confirm-booking').on('click', addBooking);
 })
 //-------------------------------FUNCIONES USUSARIO---------------------
+//traer y mostrar las horas disponibles para que usuario pueda pedir turno
+function getBookingHours() {
+    for (let i = startHour; i <= endHour; i++) {
+        $$('#hour-booking').append(`
+        <option value="18:00">${i}:00</option>`)
+    }
+}
+
 //agregar el turno a la base de datos 
-function addBooking(){
-    smartSelectDay = app.smartSelect.get('#selected-day');
-    smartSelectHour = app.smartSelect.get('#selected-hour');
-   console.log('Turno: dia seleccionado:',smartSelectDay.getValue());
-   console.log('Turno: hora seleccionada:',smartSelectHour.getValue());
+function addBooking() {
+    contadorPrueba ++;
+    mipruebaSelect = app.smartSelect.create({
+        el: '#selected-hour',
+        sheetCloseLinkText: 'hola',
+    })
+    mipruebaSelect.open();
+    // console.log('Turno: dia seleccionado:', smartSelectDay.getValue());
+    // console.log('Turno: hora seleccionada:', smartSelectHour.getValue());
 }
 //mostrar servicios
 function showUserServices() {
@@ -387,10 +445,8 @@ function updatePrice() {
     $$('#total-price').text(myBooking.price);
     $$('#total-time').text(myBooking.time);
 }
-
 //register
 function register() {
-
     var hasError = false;
     var name = $$('#name').val();
     var lastName = $$('#lastName').val();
@@ -465,7 +521,6 @@ function login() {
         });
 
 }
-
 //-------------------->>>>>>>>>>  AUTOLOGIN <<<<<<<<<<<-------------
 function consultarLocalStorage() {
 
@@ -527,7 +582,6 @@ function LoguearseConLocal(u, c) {
 //-------------->>>>>>TERMINA AUTOLOGIN<<<<-------------
 //  LOGOUT
 function doLogOut() {
-
     localStorage.clear();
     mainView.router.navigate('/');
 }
