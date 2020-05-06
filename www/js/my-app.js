@@ -390,11 +390,36 @@ function getBookingHours() {
         booking.doc(`${day}/${xHour}/minutos`).get().then(function (doc) {
             if (doc.exists) {
                 hoursDayCheck[xHour] = doc.data();
-                disabled = doc.data().lleno ? 'disabled' : '';
-                $$('#hour-booking').append(`
-                    <option ${disabled} value="${j}">${j}:00</option>`);
                 cont++;
-                if (cont == endStartDiference){
+                if (cont > endStartDiference) {
+                    for (let i = startHour; i <= endHour; i++) {
+                        var myhour = '';
+                        var myHourPlus = '';
+                        var myHourPlusPLus = '';
+                        i < 10 ? myhour = `0${i}` : myhour = i.toString();
+                        disabled = hoursDayCheck[myhour].lleno ? 'disabled' : ''; // esta ocupada esta hora?
+                        if (disabled == ''){ //si no esta ocupada
+                            myHourPlus = (parseInt(myhour) + 1);
+                            myHourPlusPLus = (parseInt(myhour) + 2);
+                            myHourPlus =  myHourPlus < 10 ? `0${myHourPlus}` : myHourPlus.toString();
+                            myHourPlusPLus =  myHourPlusPLus < 10 ? `0${myHourPlusPLus}` : myHourPlusPLus.toString();
+                            if(myBooking.time < (60 - hoursDayCheck[myhour].cantidad)){ // el tiempo de todos mis servicios es menor al de esta hora?
+                                disabled = '';
+                            } else if( endHour < (parseInt(myHourPlus))){
+                                disabled = 'disabled';
+                            } else if(myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad))){ //el tiempo de todos mis servicios es menor al de esta hora y la siguiente sumado
+                                disabled = '';
+                            } else if (endHour < (parseInt(myHourPlusPlus))){
+                                disabled = 'disabled';
+                            } else if(myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad) + (60 - hoursDayCheck[myHourPlusPLus].cantidad))){
+                                disabled = '';
+                            }
+                        }
+                        $$('#hour-booking').append(`
+                            <option ${disabled} value="${i}">${i}:00</option>
+                            `);
+                    }
+
                     console.log('horas agregadas correctamente');
                     $$('#selected-hour').show();
                 }
@@ -419,7 +444,14 @@ function saludar() {
 }
 //agregar el turno a la base de datos 
 function addBooking() {
-    
+    var usuarioLocal = storage.getItem("usuario");
+    usuarioLocal = JSON.parse(usuarioLocal);
+    myBooking.mail = usuarioLocal.email;
+    if(myBooking.services.length == 0 ){
+        alert('Tiene que elegir al menos un servicio')
+    } else{
+        console.log('turno enviado: ', myBooking);
+    }    
 }
 //mostrar servicios
 function showUserServices() {
@@ -458,6 +490,7 @@ function selectedServices() {
 function selectMyServices() {
     smartSelectDay = app.smartSelect.get('#selected-day');
     $$('#time-select').show();
+    $$('#selected-hour').hide();
     myBooking.services = [];
     getAllServices(false);
     myBooking.price = 0;
