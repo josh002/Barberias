@@ -3,8 +3,6 @@ var storage = window.localStorage;
 var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
 var db; //base de datos
-var mipruebaSelect;
-var contadorPrueba = 0;
 var userCollection, booking; //datos de los usuarios
 var smartSelectDay, smartSelectHour;
 var myServicesSelected;
@@ -23,6 +21,7 @@ var newService = {
     price: 0,
     time: 0,
 }
+var hoursDayCheck = {};
 var schedule;
 var pickerInline, pickerInline2, today;
 var servicesPrice = [300, 200, 100, 600];
@@ -359,38 +358,68 @@ $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
 
     console.log(e);
     console.log('estas en tabs de usuario');
-    // smartSelectDay = app.smartSelect.get('#selected-day');                     
-    // smartSelectHour = app.smartSelect.get('#selected-hour'); 
-    // smartSelectDay.open();
-    // smartSelectHour.open();
-    getBookingHours();
-   
-    
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
     $$('#select-my-services').on('click', selectMyServices);
     $$('#services-confirm').on('click', selectedServices);
     $$('#confirm-booking').on('click', addBooking);
+    $$('#time-select').hide();
+    $$('#selected-day').on('smartselect:closed', getBookingHours);
+    $$('#selected-day').on('click', emptyHour);
 })
 //-------------------------------FUNCIONES USUSARIO---------------------
 //traer y mostrar las horas disponibles para que usuario pueda pedir turno
+
 function getBookingHours() {
-    for (let i = startHour; i <= endHour; i++) {
-        $$('#hour-booking').append(`
-        <option value="18:00">${i}:00</option>`)
-    }
+    $$('#show-hour').append(`
+    <div id="selected-hour" class="item-inner smart-select smart-select-init" data-open-in="sheet">
+      <div class="item-header">Hora</div>
+      <div class="item-after"><select id="hour-booking" name="hora">              
+          </select>
+      </div>
+    `);
+    $$('#selected-hour').hide();
+    var disabled = '';
+    var day = smartSelectDay.getValue();
+    var cont = 0;
+    var endStartDiference = endHour - startHour;
+    console.log('dia seleccionado:', day);
+    for (let j = startHour; j <= endHour; j++) {
+        let xHour;
+        j < 10 ? xHour = `0${j}` : xHour = j.toString();
+        booking.doc(`${day}/${xHour}/minutos`).get().then(function (doc) {
+            if (doc.exists) {
+                hoursDayCheck[xHour] = doc.data();
+                disabled = doc.data().lleno ? 'disabled' : '';
+                $$('#hour-booking').append(`
+                    <option ${disabled} value="${j}">${j}:00</option>`);
+                cont++;
+                if (cont == endStartDiference){
+                    console.log('horas agregadas correctamente');
+                    $$('#selected-hour').show();
+                }
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+    };
+    console.log(`datos de las horas de ${day}`, hoursDayCheck);
 }
 
+//borrar seleccionar horarios
+function emptyHour() {
+    $$('#show-hour').empty();
+}
+
+function saludar() {
+    console.log('hola')
+}
 //agregar el turno a la base de datos 
 function addBooking() {
-    contadorPrueba ++;
-    mipruebaSelect = app.smartSelect.create({
-        el: '#selected-hour',
-        sheetCloseLinkText: 'hola',
-    })
-    mipruebaSelect.open();
-    // console.log('Turno: dia seleccionado:', smartSelectDay.getValue());
-    // console.log('Turno: hora seleccionada:', smartSelectHour.getValue());
+    
 }
 //mostrar servicios
 function showUserServices() {
@@ -427,6 +456,8 @@ function selectedServices() {
 }
 //selecccionar mis servicios y resetear el precio
 function selectMyServices() {
+    smartSelectDay = app.smartSelect.get('#selected-day');
+    $$('#time-select').show();
     myBooking.services = [];
     getAllServices(false);
     myBooking.price = 0;
