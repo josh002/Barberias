@@ -2,11 +2,14 @@ var $$ = Dom7;
 var storage = window.localStorage;
 var usuario = { "email": "", "clave": "" };
 var usuarioLocal, claveLocal;
+var cantTurnosLocal = 0;
 var db; //base de datos
 var userCollection, booking; //datos de los usuarios
 var smartSelectDay, smartSelectHour;
 var myServicesSelected;
 var services;
+var turnos;
+var misTurnos = [];
 var allServices = [];
 var myBooking = {
     mail: '',
@@ -14,6 +17,9 @@ var myBooking = {
     price: 0,
     time: 0,
     date: new Date(),
+    startTime: 0,
+    day: '',
+    name: '',
 }
 var newService = {
     name: '',
@@ -64,9 +70,36 @@ $$(document).on('deviceready', function () {
     booking = db.collection("booking");
     services = db.collection("services");
     schedule = db.collection("schedule");
+    turnos = db.collection("turnos");
     consultarLocalStorage(); // AUTOLOGIN
     getStartEndHours();
+
+
 })
+function getAllBooking() {
+    turnos.where("name", "==", myBooking.name)
+        .get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                misTurnos.push(doc.data());
+                $$('#cards-de-turnos').append(`
+            <div class="card">
+                <div class="card-header">Dia: ${doc.data().day} Hora: ${doc.data().startTime}:00</div>
+                    <div class="card-content card-content-padding">
+                        Servicios : ${doc.data().services}
+                    </div>
+                <div class="card-footer">Precio: ${doc.data().price}</div>
+            </div>
+            `)
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
+
+}
 //para iniciarlizar todas las colecciones de minutos por semana
 function creatingBookings() {
     var dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
@@ -140,8 +173,37 @@ $$(document).on('page:init', '.page[data-name="tabs-admin"]', function (e) {
     $$('#end-hour').on('click', showEndpicker)
     $$('.logoutButton').on('click', doLogOut);
     $$('#add-service').on('click', addNewService)
+    getClients();
 })
-//--------------FUNCIONES DE ADMINISTRADOR---------------
+//----------c----FUNCIONES DE ADMINISTRADOR---------------
+function getClients() {
+    var xdays = ["lunes","martes","miercoles","jueves","viernes","sabado"]
+    for (let i = 0; i < xdays.length; i++) {
+        turnos.where("day", "==", xdays[i])
+        .get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                misTurnos.push(doc.data());
+                $$('#cards-' + xdays[i]).append(`
+            <div class="card">
+                <div class="card-header">Cliente ${doc.data().name}</div>
+                    <div class="card-content card-content-padding">
+                        <h3>Hora: ${doc.data().startTime}:00</h3>
+                        <h3>Servicios : ${doc.data().services}</h3>
+                    </div>
+                <div class="card-footer">Precio: ${doc.data().price}</div>
+            </div>
+            `)
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
+    }  
+        
+}
 function addNewService() {
     newService.name = $$('#new-service-name').val();
     newService.description = $$('#new-service-description').val();
@@ -355,8 +417,6 @@ function getAllServices(isAdmin) {
 }
 //fin funciones compartidas
 $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
-
-    console.log(e);
     console.log('estas en tabs de usuario');
     $$('.logoutButton').on('click', doLogOut);
     //empieza funcionalidades de los turnos
@@ -366,8 +426,26 @@ $$(document).on('page:init', '.page[data-name="tabs"]', function (e) {
     $$('#time-select').hide();
     $$('#selected-day').on('smartselect:closed', getBookingHours);
     $$('#selected-day').on('click', emptyHour);
+    getUserName();
 })
 //-------------------------------FUNCIONES USUSARIO---------------------
+//obtener el nombre de usuario
+function getUserName() {
+    var usuarioGuardado = storage.getItem("usuario");
+    usuarioGuardado = JSON.parse(usuarioGuardado);
+    userCollection.doc(`${usuarioGuardado.email}`).get().then(function (doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data().name);
+            myBooking.name = doc.data().name;
+            getAllBooking();
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function (error) {
+        console.log("Error getting document:", error);
+    });
+};
 //traer y mostrar las horas disponibles para que usuario pueda pedir turno
 
 function getBookingHours() {
@@ -398,20 +476,18 @@ function getBookingHours() {
                         var myHourPlusPLus = '';
                         i < 10 ? myhour = `0${i}` : myhour = i.toString();
                         disabled = hoursDayCheck[myhour].lleno ? 'disabled' : ''; // esta ocupada esta hora?
-                        if (disabled == ''){ //si no esta ocupada
+                        if (disabled == '') { //si no esta ocupada
                             myHourPlus = (parseInt(myhour) + 1);
                             myHourPlusPLus = (parseInt(myhour) + 2);
-                            myHourPlus =  myHourPlus < 10 ? `0${myHourPlus}` : myHourPlus.toString();
-                            myHourPlusPLus =  myHourPlusPLus < 10 ? `0${myHourPlusPLus}` : myHourPlusPLus.toString();
-                            if(myBooking.time < (60 - hoursDayCheck[myhour].cantidad)){ // el tiempo de todos mis servicios es menor al de esta hora?
+                            myHourPlus = myHourPlus < 10 ? `0${myHourPlus}` : myHourPlus.toString();
+                            myHourPlusPLus = myHourPlusPLus < 10 ? `0${myHourPlusPLus}` : myHourPlusPLus.toString();
+                            if (myBooking.time < (60 - hoursDayCheck[myhour].cantidad)) { // el tiempo de todos mis servicios es menor al de esta hora?
                                 disabled = '';
-                            } else if( endHour < (parseInt(myHourPlus))){
+                            } else if (endHour < (parseInt(myHourPlus))) {
                                 disabled = 'disabled';
-                            } else if(myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad))){ //el tiempo de todos mis servicios es menor al de esta hora y la siguiente sumado
+                            } else if (myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad))) { //el tiempo de todos mis servicios es menor al de esta hora y la siguiente sumado
                                 disabled = '';
-                            } else if (endHour < (parseInt(myHourPlusPlus))){
-                                disabled = 'disabled';
-                            } else if(myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad) + (60 - hoursDayCheck[myHourPlusPLus].cantidad))){
+                            } else if (myBooking.time < ((60 - hoursDayCheck[myhour].cantidad) + (60 - hoursDayCheck[myHourPlus].cantidad) + (60 - hoursDayCheck[myHourPlusPLus].cantidad))) {
                                 disabled = '';
                             }
                         }
@@ -442,16 +518,94 @@ function emptyHour() {
 function saludar() {
     console.log('hola')
 }
+function resetTurno(){
+    $$('#total-price').text('0');
+    $$('#total-time').text('0');
+    $$('#time-select').hide();
+}
 //agregar el turno a la base de datos 
 function addBooking() {
+    smartSelectHour = app.smartSelect.get('#selected-hour');
+    var hour = parseInt(smartSelectHour.getValue());
+    var myday = smartSelectDay.getValue().toString();
+    console.log('hora seleccionada:', hour);
     var usuarioLocal = storage.getItem("usuario");
     usuarioLocal = JSON.parse(usuarioLocal);
-    myBooking.mail = usuarioLocal.email;
-    if(myBooking.services.length == 0 ){
+    var hourString = hour < 10 ? `0${hour}` : hour.toString();
+    if (myBooking.services.length == 0) {
         alert('Tiene que elegir al menos un servicio')
-    } else{
-        console.log('turno enviado: ', myBooking);
-    }    
+    } else {
+        
+        cantTurnosLocal++;
+        myBooking.startTime = parseInt(hour);
+        myBooking.mail = usuarioLocal.email;
+        myBooking.day = myday;
+        var cantString = cantTurnosLocal.toString();
+        var detailsActualHour;
+        var excedente = 0;
+        turnos.add(myBooking)
+            .then(function (docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                $$('#cards-de-turnos').empty();
+                getAllBooking();
+                alert('Turno Agendado con Exito');
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
+        booking.doc(`${myday}/${hourString}/minutos`).get().then(function (doc) {
+            if (doc.exists) {
+                detailsActualHour = doc.data();
+                console.log('detalles de la hora actual seleccionada', detailsActualHour)
+            } else {
+                console.log("No such document!");
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+        booking.doc(`${myday}/${hourString}/${myBooking.name}${cantString}`).set(myBooking)
+            .then(function () {
+                var cantidad = 0;
+                var lleno = false;
+                if (myBooking.time < 60) {
+                    cantidad = myBooking.time;
+                    lleno = false;
+                } else {
+                    lleno = true;
+                    excedente = myBooking.time + parseInt(detailsActualHour.cantidad) - 60;
+                    cantidad = 60;
+                }
+                console.log('excedente:', excedente);
+                var myObject = {
+                    cantidad: cantidad,
+                    lleno: lleno,
+                }
+                console.log("turno pedido correctamente", myBooking);
+                resetTurno();
+                booking.doc(`${myday}/${hourString}/minutos`).update(myObject)
+                    .then(function () {
+                        console.log("update correcto");
+                        if (excedente > 0) {
+                            var myhourstring = parseInt(hourString) + 1;
+                            myhourstring = myhourstring < 10 ? `0${myhourstring}` : myhourstring.toString();
+                            booking.doc(`${myday}/${myhourstring}/minutos`).update({
+                                cantidad: excedente,
+                                lleno: false,
+                            }).then(function (doc) {
+                                console.log('exedecte añadido correctamente');
+                            }).catch(function (error) {
+                                console.log("Error updating document:", error);
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Error al hacer update", error);
+                    });
+            })
+            .catch(function (error) {
+                console.error("Error al enviar turno", error);
+            });
+    }
 }
 //mostrar servicios
 function showUserServices() {

@@ -3,34 +3,43 @@
 .device-cordova.device-ios {
     height: 100vh;
 }
-.login-input{
+
+.login-input {
     padding-left: 8vw;
     padding-right: 12vw !important;
 }
-.register-page{
+
+.register-page {
     margin-top: 20vh;
 }
-.login-buttons{
+
+.login-buttons {
     width: 60vw;
     margin-left: 20vw;
 }
-.general-button{
+
+.general-button {
     padding-right: 20%;
     padding-left: 20%;
 }
-.booking-button{
+
+.booking-button {
     padding-bottom: 10%;
     padding-top: 10%;
 }
-.title-case{
-    text-transform: capitalize;   
+
+.title-case {
+    text-transform: capitalize;
 }
-#login{
+
+#login {
     margin-top: 7vh;
 }
-#register{
+
+#register {
     margin-top: 7vh;
 }
+
 #main-logo {
     height: 54vw;
     width: 50vw;
@@ -39,8 +48,10 @@
     background-size: contain;
     margin-left: 25vw;
     margin-top: 10vh;
+    
 }
-.panel-logo{
+
+.panel-logo {
     height: 30vh;
     width: 50vw;
     background-image: url("../assets/images/pngocean.com.png");
@@ -48,43 +59,79 @@
     background-size: contain;
     margin-left: 10%;
 }
+
 /* home view */
-.panel-buttons{
+
+.panel-buttons {
     margin-top: 6vh;
 }
-.card-content-home{
+
+.card-content-home {
     height: 82vh;
 }
-.card-content-home .card-header{
-    padding:5%;
+
+.card-content-home .card-header {
+    padding: 5%;
 }
-.card-content-home .card-content{
+
+.card-content-home .card-content {
     padding: 10%;
 }
-.card-content-home .list ul li{
-    padding-top: 5% ;
-    padding-bottom: 5% ;
+
+.card-content-home .list ul li {
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
+
 .popup-services {
     padding: 3% 3% 0 3%;
 }
-.services-confirm-button{
+
+.services-confirm-button {
     height: 40px !important;
 }
-.ok-right-button{
+
+.ok-right-button {
     width: 10vw;
     float: right;
 }
-.ok-right-button-2{
+
+.ok-right-button-2 {
     width: 10vw;
     float: right;
 }
-#margin-start-picker{
+
+#margin-start-picker {
     margin-top: 4vh !important;
 }
-#margin-end-picker{
+
+#margin-end-picker {
     margin-top: 8vh !important;
 }
+
 /* booking view */
 
+.link-float-right {
+    float: right;
+}
+
+#pagina-inicio {
+    background: rgb(237,237,237);
+background: radial-gradient(circle, rgba(237,237,237,1) 75%, rgba(129,133,129,0.9976365546218487) 100%);
+}
+.navbar{
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 155% !important;
+}
+.barberias-letra{
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 155% !important;
+}
+.card-sombreado{
+    box-shadow: 0px 0px 28px -14px rgba(0,0,0,0.75);
+}
+/* .ante-titulo{
+    height: 36px;
+    margin-top: 2px;
+} */
 /* Your app custom styles here */
